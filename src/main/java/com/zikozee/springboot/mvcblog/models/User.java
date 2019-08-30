@@ -29,9 +29,6 @@ public class User {
     private Set<Post> posts = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
 
     public User(long id, String username, String fullName) {

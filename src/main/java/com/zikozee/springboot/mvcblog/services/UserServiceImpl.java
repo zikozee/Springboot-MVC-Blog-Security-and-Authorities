@@ -3,7 +3,6 @@ package com.zikozee.springboot.mvcblog.services;
 import com.zikozee.springboot.mvcblog.models.Authority;
 import com.zikozee.springboot.mvcblog.models.BlogUser;
 import com.zikozee.springboot.mvcblog.models.User;
-import com.zikozee.springboot.mvcblog.repositories.AuthorityRepository;
 import com.zikozee.springboot.mvcblog.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,16 +17,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private NotificationService notifyService;
     private final PasswordEncoder passwordEncoder;
-    private AuthorityRepository authorityRepository;
+    private AuthorityService authorityService;
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
     public UserServiceImpl(UserRepository userRepository, NotificationService notifyService,
-                           PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+                           PasswordEncoder passwordEncoder, AuthorityService authorityService) {
         this.userRepository = userRepository;
         this.notifyService = notifyService;
         this.passwordEncoder = passwordEncoder;
-        this.authorityRepository = authorityRepository;
+        this.authorityService = authorityService;
     }
 
     @Override
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
         }else{
             // we didn't find the employee
             //throw new RuntimeException("Did not find employee id - " + id);
-            notifyService.addErrorMessage("Did not find Post id - " + id);
+            notifyService.addErrorMessage("Did not find user id - " + id);
         }
         return user;
     }
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
         Authority authority = new Authority();
         authority.setAuthority("ROLE_USER");
         authority.setUsername(blogUser.getUsername());
-        authorityRepository.save(authority);
+        authorityService.save(authority);
 
         return user;
     }
@@ -73,10 +72,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        if(id > findAll().size() || id <=0){
-            logger.info(id.toString() + " " + findAll().size() + " last " + findAll().get(findAll().size()-2).getId());
-            notifyService.addErrorMessage("User id not found: " + id);
-            return;
+        User user = findById(id);
+        String username = user.getUsername();
+        for(Authority authority : authorityService.findAll()){
+            if(authority.getUsername().equals(username)){
+                authorityService.delete(authority.getId());
+            }
         }
         this.userRepository.deleteById(id);
     }

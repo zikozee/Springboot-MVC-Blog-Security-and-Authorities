@@ -32,4 +32,14 @@ public class AuthorityServiceImpl implements AuthorityService {
         }
         return userAuthorities;
     }
+
+    @Override
+    public void save(Authority authority) {
+        this.authorityRepository.save(authority);
+    }
+
+    @Override
+    public void delete(Long id) {
+        authorityRepository.deleteById(id);
+    }
 }

@@ -2,6 +2,7 @@ package com.zikozee.springboot.mvcblog.controllers;
 
 import com.zikozee.springboot.mvcblog.models.BlogUser;
 import com.zikozee.springboot.mvcblog.models.LoginForm;
+import com.zikozee.springboot.mvcblog.models.User;
 import com.zikozee.springboot.mvcblog.services.NotificationService;
 import com.zikozee.springboot.mvcblog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,10 +92,11 @@ public class LoginRegisterController {
             return "users/register";
         }
 //
+
         if(userService.findByUserName(blogUser.getUsername()) == null){
-            userService.create(blogUser);
+          User user = userService.create(blogUser);
         }else{
-            notifyService.addErrorMessage("Username Already in use");
+            notifyService.addErrorMessage(blogUser.getUsername() +" Already in use");
             return "users/register";
         }
 
