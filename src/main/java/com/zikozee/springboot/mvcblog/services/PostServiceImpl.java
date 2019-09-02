@@ -21,12 +21,17 @@ public class PostServiceImpl implements PostService{
     private UserService userService;
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    public PostServiceImpl(PostRepository postRepo,NotificationService notificationService, @Lazy UserService userService) {
+    //used @Lazy to prevent bean circle_loop--->> occurs only in constructor injection
+    //another option we can use setter injection like below since field injection is not recommended
+    public PostServiceImpl(PostRepository postRepo, NotificationService notificationService, @Lazy UserService userService) {
         this.postRepository = postRepo;
         this.notifyService = notificationService;
         this.userService = userService;
     }
 
+//    public void LoadMe(UserService userService){
+//        this.userService = userService;
+//    }
 
     @Override
     public List<Post> findAll() {
@@ -97,15 +102,5 @@ public class PostServiceImpl implements PostService{
         return userPosts;
     }
 
-    @Override
-    public void deleteByAuthorId(Long id) {
-        List<Post> allPost = postRepository.findAll();
-
-        for(Post post: allPost){
-            if(post.getAuthor().getId().equals(id)){
-                deleteById(post.getId());
-            }
-        }
-    }
 
 }

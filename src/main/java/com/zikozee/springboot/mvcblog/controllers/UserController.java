@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 @Controller
 public class UserController {
     private UserService userService;
     private PostService postService;
     private NotificationService notifyService;
-    private Logger logger = Logger.getLogger(getClass().getName());
 
     @Autowired
     public UserController(UserService theUserService, PostService postService, NotificationService theNotifyService) {

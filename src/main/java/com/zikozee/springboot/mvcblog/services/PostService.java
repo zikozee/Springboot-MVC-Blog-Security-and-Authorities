@@ -11,6 +11,5 @@ public interface PostService {
     Post findById(Long id);
     Post create_edit(Post post);
     void deleteById(Long id);
-    void deleteByAuthorId(Long id);
     Set<Post> findByAuthor(String username);
 }
