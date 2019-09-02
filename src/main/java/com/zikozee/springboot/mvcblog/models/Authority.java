@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -14,12 +13,10 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // no need for @Column(name ="") since database field and entity field are same
+    @Column(nullable = false, length = 30)
     private String username;
 
+    @Column(nullable = false)
     private String authority;
-
-    @ManyToMany(mappedBy = "authorities")
-    private Set<User> users;
 
 }

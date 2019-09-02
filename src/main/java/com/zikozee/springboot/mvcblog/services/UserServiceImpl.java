@@ -1,6 +1,5 @@
 package com.zikozee.springboot.mvcblog.services;
 
-import com.zikozee.springboot.mvcblog.models.Authority;
 import com.zikozee.springboot.mvcblog.models.BlogUser;
 import com.zikozee.springboot.mvcblog.models.User;
 import com.zikozee.springboot.mvcblog.repositories.UserRepository;
@@ -57,10 +56,10 @@ public class UserServiceImpl implements UserService {
         user.setFullName(blogUser.getFullName());
         userRepository.save(user);
 //        // give user default role of "USER"
-        Authority authority = new Authority();
-        authority.setAuthority("ROLE_USER");
-        authority.setUsername(blogUser.getUsername());
-        authorityService.save(authority);
+//        Authority authority = new Authority();
+//        authority.setAuthority("ROLE_USER");
+//        authority.getAuthor().setUsername(blogUser.getUsername());
+//        authorityService.save(authority);
 
         return user;
     }
@@ -72,13 +71,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        User user = findById(id);
-        String username = user.getUsername();
-        for(Authority authority : authorityService.findAll()){
-            if(authority.getUsername().equals(username)){
-                authorityService.delete(authority.getId());
-            }
-        }
+//        User user = findById(id);
+//        String username = user.getUsername();
+//        for(Authority authority : authorityService.findAll()){
+//            if(authority.getUsername().equals(username)){
+//                authorityService.delete(authority.getId());
+//            }
+//        }
         this.userRepository.deleteById(id);
     }
 
@@ -90,11 +89,5 @@ public class UserServiceImpl implements UserService {
            }
        }
         return null;
-    }
-
-
-    @Override
-    public void saveExistingUser(BlogUser blogUser) {
-
     }
 }

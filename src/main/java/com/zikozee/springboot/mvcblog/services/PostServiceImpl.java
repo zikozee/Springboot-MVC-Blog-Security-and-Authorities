@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -14,11 +16,13 @@ import java.util.logging.Logger;
 public class PostServiceImpl implements PostService{
     private PostRepository postRepository;
     private NotificationService notifyService;
+    private UserService userService;
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    public PostServiceImpl(PostRepository postRepo, NotificationService notificationService) {
+    public PostServiceImpl(PostRepository postRepo, NotificationService notificationService, UserService userService) {
         this.postRepository = postRepo;
         this.notifyService = notificationService;
+        this.userService = userService;
     }
 
 
@@ -31,12 +35,12 @@ public class PostServiceImpl implements PostService{
     public List<Post> findLatest5() {
         return this.postRepository.findLatest5Posts(PageRequest.of(0, 5));
 
-        //for loop commented out
 //        List<Post> last5 = new ArrayList<>();
-//        posts.sort(Comparator.comparing(Post::getDate));
-//        //posts.sort(Comparator.comparing(Post::getDate).reversed());
-//        for(int i=0; i<(posts.size()-(posts.size()-5)); i++){
-//            last5.add(posts.get(i));
+//        List<Post> allPost = findAll();
+//        //allPost.sort(Comparator.comparing(Post::getDate));
+//        allPost.sort(Comparator.comparing(Post::getDate).reversed());
+//        for(int i=0; i<(allPost.size()-(allPost.size()-5)); i++){
+//            last5.add(allPost.get(i));
 //        }
 //        return last5;
     }
@@ -55,31 +59,16 @@ public class PostServiceImpl implements PostService{
         return post;
     }
 
-//    @Override
-//    public Post createPost(Post post) {
-////        post.setId(this.posts.stream().mapToLong(
-////                p->p.getId()).max().getAsLong()+1);
-////        this.posts.add(post);
-////        return post;
-//
-////        long id = this.posts.size();
-////        post.setId(id+1);
-////        this.posts.add(post);
-////        return post;
-//        return this.postRepository.save(post);
-//    }
-
     @Override
-    public Post save(Post post) {
-//        for(int i=0; i<this.posts.size(); i++){
-//            if(Objects.equals(this.posts.get(i).getId(), post.getId())){
-//                this.posts.set(i, post);
-//                return post;
-//            }
-//        }
-//        return null;
+    public Post create(Post post) {
         return this.postRepository.save(post);
     }
+
+    @Override
+    public Post edit(Post post) {
+        return this.postRepository.save(post);
+    }
+
 
     @Override
     public void deleteById(Long id) {
@@ -107,7 +96,6 @@ public class PostServiceImpl implements PostService{
                 userPosts.add(post);
             }
         }
-
         return userPosts;
     }
 }

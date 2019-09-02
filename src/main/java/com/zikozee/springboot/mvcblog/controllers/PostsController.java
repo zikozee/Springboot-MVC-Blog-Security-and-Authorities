@@ -1,11 +1,14 @@
 package com.zikozee.springboot.mvcblog.controllers;
 
 import com.zikozee.springboot.mvcblog.models.Post;
+import com.zikozee.springboot.mvcblog.models.User;
 import com.zikozee.springboot.mvcblog.services.NotificationService;
 import com.zikozee.springboot.mvcblog.services.PostService;
+import com.zikozee.springboot.mvcblog.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +19,14 @@ import java.util.List;
 public class PostsController {
     private PostService postService;
     private NotificationService notifyService;
+    private UserService userService;
 
     private Logger logger = LoggerFactory.getLogger(PostsController.class);
     @Autowired
-    public PostsController(PostService thePostService, NotificationService theNotifyService) {
+    public PostsController(PostService thePostService, NotificationService theNotifyService, UserService userService) {
         this.postService = thePostService;
         this.notifyService = theNotifyService;
+        this.userService = userService;
     }
 
     @GetMapping("/posts/view/{id}")
@@ -68,7 +73,13 @@ public class PostsController {
 
     @PostMapping("/posts/save")
     public String savePost(@ModelAttribute("post") Post post){
-        postService.save(post);
+        String loggedInUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUserName(loggedInUsername);
+        Long userId = user.getId();
+//        post.setUser_id(userId);
+//
+//        logger.info(post.getUser_id().toString());
+        postService.create(post);
         notifyService.addInfoMessage("Post created successfully");
         return "redirect:/posts";
     }

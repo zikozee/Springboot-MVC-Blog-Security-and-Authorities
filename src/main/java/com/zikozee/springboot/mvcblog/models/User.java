@@ -3,33 +3,41 @@ package com.zikozee.springboot.mvcblog.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 30, unique = true, name = "username")
+    @Column(nullable = false, length = 30, unique = true)
     private String username;
 
-    @Column(length = 60, name = "password")
+    @Column(length = 60)
     private String passwordHash;
 
-    @Column(length = 100, name = "full_name")
+    @Column(length = 100)
     private String fullName;
 
-    @OneToMany(mappedBy = "author")
-    private Set<Post> posts = new HashSet<>();
+    @Column(nullable = false)
+    private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Authority> authorities;
+    @OneToMany(mappedBy = "author")
+    private Set<Post> post = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_authorities",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
+    private List<Authority> authorities;
 
     public User(long id, String username, String fullName) {
         this.id = id;
@@ -43,13 +51,4 @@ public class User {
         this.fullName = fullName;
     }
 
-    @Override
-    public String toString() { //omit post to avoid endless recursion
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", passwordHash='" + passwordHash + '\'' +
-                ", fullName='" + fullName + '\'' +
-                '}';
-    }
 }

@@ -8,8 +8,8 @@ public interface PostService {
     List<Post> findAll();
     List<Post> findLatest5();
     Post findById(Long id);
-    //Post createPost(Post post);
-    Post save(Post post);
+    Post create(Post post);
+    Post edit(Post post);
     void deleteById(Long id);
     List<Post> findByAuthor(String username);
 }

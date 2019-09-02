@@ -42,6 +42,7 @@ public class UserController {
     public String ListUserPost(Model theModel){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         //logger.info(username);
+
         List<Post> userPosts =  postService.findByAuthor(username);
         if(userPosts == null ||  userPosts.isEmpty()){
             notifyService.addErrorMessage(username +" has not posted");

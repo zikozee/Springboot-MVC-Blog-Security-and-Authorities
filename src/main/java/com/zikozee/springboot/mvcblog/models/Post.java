@@ -17,10 +17,10 @@ public class Post {
     @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false, length = 300, name = "title")
+    @Column(nullable = false, length = 300)
     private String title;
 
-    @Lob @Column(nullable = false, name = "body")
+    @Lob @Column(nullable = false)
     private String body;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

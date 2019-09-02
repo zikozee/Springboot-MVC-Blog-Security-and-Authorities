@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select p from Post p left join fetch p.author order by p.date desc ")
-    List<Post>findLatest5Posts(Pageable pageable);
+    List<Post> findLatest5Posts(Pageable pageable);
 }
