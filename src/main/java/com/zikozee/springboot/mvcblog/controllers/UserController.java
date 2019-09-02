@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @Controller
@@ -43,7 +44,7 @@ public class UserController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         //logger.info(username);
 
-        List<Post> userPosts =  postService.findByAuthor(username);
+        Set<Post> userPosts =  postService.findByAuthor(username);
         if(userPosts == null ||  userPosts.isEmpty()){
             notifyService.addErrorMessage(username +" has not posted");
             return "redirect:/";

@@ -75,11 +75,10 @@ public class PostsController {
     public String savePost(@ModelAttribute("post") Post post){
         String loggedInUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUserName(loggedInUsername);
-        Long userId = user.getId();
-//        post.setUser_id(userId);
-//
-//        logger.info(post.getUser_id().toString());
-        postService.create(post);
+
+        // take care of author_id
+        post.setAuthor(user);
+        postService.create_edit(post);
         notifyService.addInfoMessage("Post created successfully");
         return "redirect:/posts";
     }
@@ -90,7 +89,6 @@ public class PostsController {
         // delete the post
         postService.deleteById(theId);
 
-        // redirect to /employee/list
         return "redirect:/users/post";
     }
 }

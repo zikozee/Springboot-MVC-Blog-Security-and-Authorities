@@ -2,24 +2,26 @@ package com.zikozee.springboot.mvcblog.services;
 
 import com.zikozee.springboot.mvcblog.models.Post;
 import com.zikozee.springboot.mvcblog.repositories.PostRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
-@Service
 @Primary
+@Service
 public class PostServiceImpl implements PostService{
     private PostRepository postRepository;
     private NotificationService notifyService;
     private UserService userService;
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    public PostServiceImpl(PostRepository postRepo, NotificationService notificationService, UserService userService) {
+    public PostServiceImpl(PostRepository postRepo,NotificationService notificationService, @Lazy UserService userService) {
         this.postRepository = postRepo;
         this.notifyService = notificationService;
         this.userService = userService;
@@ -60,12 +62,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Post create(Post post) {
-        return this.postRepository.save(post);
-    }
-
-    @Override
-    public Post edit(Post post) {
+    public Post create_edit(Post post) {
         return this.postRepository.save(post);
     }
 
@@ -86,9 +83,10 @@ public class PostServiceImpl implements PostService{
         this.postRepository.deleteById(id);
     }
 
+
     @Override
-    public List<Post> findByAuthor(String username) {
-        List<Post> userPosts = new ArrayList<>();
+    public Set<Post> findByAuthor(String username) {
+        Set<Post> userPosts = new HashSet<>();
 
         for(Post post: findAll()){
             //logger.info(post.getAuthor().getUsername());
@@ -98,4 +96,16 @@ public class PostServiceImpl implements PostService{
         }
         return userPosts;
     }
+
+    @Override
+    public void deleteByAuthorId(Long id) {
+        List<Post> allPost = postRepository.findAll();
+
+        for(Post post: allPost){
+            if(post.getAuthor().getId().equals(id)){
+                deleteById(post.getId());
+            }
+        }
+    }
+
 }

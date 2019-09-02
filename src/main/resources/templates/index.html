@@ -22,10 +22,10 @@
             <div class="date">
                 <i>Posted on</i>
                 <span th:text="${#dates.format(p.date, 'dd-MMM-yyy')}">19-August-2019</span>
-                <span th:if="${p.user}" th:remove="tag">
+                <span th:if="${p.author}" th:remove="tag">
                 <i>by</i>
-                <span th:text="${(p.user.fullName) != null?
-                            p.user.fullName : p.user.username}"></span>
+                <span th:text="${(p.author.fullName) != null?
+                            p.author.fullName : p.author.username}"></span>
                 </span>
             </div>
             <p class="content" th:utext="${p.body}">Post Content</p>

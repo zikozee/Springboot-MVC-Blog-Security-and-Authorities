@@ -1,5 +1,6 @@
 package com.zikozee.springboot.mvcblog.services;
 
+import com.zikozee.springboot.mvcblog.models.Authority;
 import com.zikozee.springboot.mvcblog.models.BlogUser;
 import com.zikozee.springboot.mvcblog.models.User;
 import com.zikozee.springboot.mvcblog.repositories.UserRepository;
@@ -17,15 +18,17 @@ public class UserServiceImpl implements UserService {
     private NotificationService notifyService;
     private final PasswordEncoder passwordEncoder;
     private AuthorityService authorityService;
+    private PostService postService;
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
     public UserServiceImpl(UserRepository userRepository, NotificationService notifyService,
-                           PasswordEncoder passwordEncoder, AuthorityService authorityService) {
+                           PasswordEncoder passwordEncoder, AuthorityService authorityService, PostService postService) {
         this.userRepository = userRepository;
         this.notifyService = notifyService;
         this.passwordEncoder = passwordEncoder;
         this.authorityService = authorityService;
+        this.postService = postService;
     }
 
     @Override
@@ -54,12 +57,11 @@ public class UserServiceImpl implements UserService {
         user.setUsername(blogUser.getUsername());
         user.setPasswordHash(passwordEncoder.encode(blogUser.getPassword()));
         user.setFullName(blogUser.getFullName());
+        user.setEnabled(true);
         userRepository.save(user);
 //        // give user default role of "USER"
-//        Authority authority = new Authority();
-//        authority.setAuthority("ROLE_USER");
-//        authority.getAuthor().setUsername(blogUser.getUsername());
-//        authorityService.save(authority);
+        Authority authority = new Authority(user.getUsername(), "ROLE_USER");
+        authorityService.save(authority);
 
         return user;
     }
@@ -71,13 +73,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-//        User user = findById(id);
-//        String username = user.getUsername();
-//        for(Authority authority : authorityService.findAll()){
-//            if(authority.getUsername().equals(username)){
-//                authorityService.delete(authority.getId());
-//            }
-//        }
+
+        //this.postService.deleteByAuthorId(id);
         this.userRepository.deleteById(id);
     }
 

@@ -3,13 +3,14 @@ package com.zikozee.springboot.mvcblog.services;
 import com.zikozee.springboot.mvcblog.models.Post;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PostService {
     List<Post> findAll();
     List<Post> findLatest5();
     Post findById(Long id);
-    Post create(Post post);
-    Post edit(Post post);
+    Post create_edit(Post post);
     void deleteById(Long id);
-    List<Post> findByAuthor(String username);
+    void deleteByAuthorId(Long id);
+    Set<Post> findByAuthor(String username);
 }

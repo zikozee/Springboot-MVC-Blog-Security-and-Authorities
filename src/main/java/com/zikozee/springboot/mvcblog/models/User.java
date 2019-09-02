@@ -21,7 +21,7 @@ public class User {
     @Column(nullable = false, length = 30, unique = true)
     private String username;
 
-    @Column(length = 60)
+    @Column(length = 60, name = "password")
     private String passwordHash;
 
     @Column(length = 100)
@@ -30,7 +30,7 @@ public class User {
     @Column(nullable = false)
     private boolean enabled;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private Set<Post> post = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
