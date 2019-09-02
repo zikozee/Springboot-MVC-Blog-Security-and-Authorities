@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "authorities")
@@ -21,6 +23,8 @@ public class Authority {
     @Column(nullable = false)
     private String authority;
 
+    @ManyToMany(mappedBy = "authorities")
+    private List<User> users = new ArrayList<>();
 
     public Authority(String username, String authority) {
         this.username = username;

@@ -7,6 +7,7 @@ import com.zikozee.springboot.mvcblog.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -58,11 +59,14 @@ public class UserServiceImpl implements UserService {
         user.setPasswordHash(passwordEncoder.encode(blogUser.getPassword()));
         user.setFullName(blogUser.getFullName());
         user.setEnabled(true);
-        userRepository.save(user);
+
 //        // give user default role of "USER"
         Authority authority = new Authority(user.getUsername(), "ROLE_USER");
-        authorityService.save(authority);
-
+        List<Authority> authorityList = new ArrayList<>();
+        authorityList.add(authority);
+        user.setAuthorities(authorityList);
+        //authorityService.save(authority);
+        userRepository.save(user);
         return user;
     }
 
