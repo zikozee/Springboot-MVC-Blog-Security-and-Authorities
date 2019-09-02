@@ -37,7 +37,7 @@
                     <a href="posts/create.html" th:href="@{/posts/create}">Create Post</a>
                     <a href="users/index.html" th:href="@{/users}">Users</a>
                     <a href="posts/userPostIndex.html" th:href="@{/users/post}">User Post(s)</a>
-                    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                    <div sec:authorize="hasAuthority('ROLE_ADMIN')" style="position: fixed">
                         <a href="admin/changeRight.html" th:href="@{/users/post}">Change User Rights</a>
                     </div>
 
