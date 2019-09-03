@@ -76,7 +76,7 @@ public class PostsController {
         String loggedInUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUserName(loggedInUsername);
 
-        // take care of author_id
+        // takes care of author_id
         post.setAuthor(user);
         postService.create_edit(post);
         notifyService.addInfoMessage("Post created successfully");
@@ -85,8 +85,7 @@ public class PostsController {
 
     @GetMapping("/posts/delete")
     public String showFormForDelete(@RequestParam("postId") Long theId){
-        //FIXME HOW TO KNOW WHICH USER POST
-        // delete the post
+
         postService.deleteById(theId);
 
         return "redirect:/users/post";

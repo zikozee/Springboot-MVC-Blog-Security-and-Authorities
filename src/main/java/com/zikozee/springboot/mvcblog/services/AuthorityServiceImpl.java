@@ -5,7 +5,7 @@ import com.zikozee.springboot.mvcblog.repositories.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 @Service
 public class AuthorityServiceImpl implements AuthorityService {
@@ -22,8 +22,8 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    public HashSet<Authority> findByUsername(String username) {
-        HashSet<Authority> userAuthorities = new HashSet<>();
+    public List<Authority> findByUsername(String username) {
+        List<Authority> userAuthorities = new LinkedList<>();
 
         for(Authority authority : findAll()){
             if(authority.getUsername().equals(username)){

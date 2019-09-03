@@ -37,6 +37,11 @@
                        th:href="@{/users/delete(userId=${user.id})}">
                         Delete
                     </a>
+                    <!-- Add "Change User Right" button link -->
+                    <a class="btn btn-info btn-sm"
+                       style="margin-right: 15px" th:href="@{/Admin/change(userId=${user.id})}">
+                        Change Rights
+                    </a>
                 </div>
             </td>
         </tr>
