@@ -62,12 +62,10 @@ public class UserServiceImpl implements UserService {
 
 //        // give user default role of "USER"
         Authority authority = new Authority(user.getUsername(), "ROLE_USER");
-//        Authority authority2 = new Authority(user.getUsername(), "ROLE_ADMIN");
         List<Authority> authorityList = new ArrayList<>();
         authorityList.add(authority);
-//        authorityList.add(authority2);
         user.setAuthorities(authorityList);
-        //authorityService.save(authority);
+        //user.getAuthorities().add(authority);   // all the authority above for this line of code
         userRepository.save(user);
         return user;
     }
