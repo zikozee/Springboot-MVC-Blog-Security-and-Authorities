@@ -26,7 +26,6 @@ public class UserController {
         this.userService = theUserService;
         this.postService = postService;
         this.notifyService = theNotifyService;
-
     }
 
     @GetMapping("/users")
@@ -40,7 +39,6 @@ public class UserController {
     @GetMapping("/users/post")
     public String ListUserPost(Model theModel){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        //logger.info(username);
 
         Set<Post> userPosts =  postService.findByAuthor(username);
         if(userPosts == null ||  userPosts.isEmpty()){
@@ -55,7 +53,6 @@ public class UserController {
     @GetMapping("/users/delete")
     public String showFormForDelete(@RequestParam("userId") Long theId){
         userService.deleteById(theId);
-
         // redirect to /employee/list
         return "redirect:/users";
     }

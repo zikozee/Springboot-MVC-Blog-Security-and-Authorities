@@ -16,12 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Controller
 public class LoginRegisterController {
@@ -29,30 +26,11 @@ public class LoginRegisterController {
     private UserService userService;
     private NotificationService notifyService;
 
-    private final PasswordEncoder passwordEncoder;
-
-    private Map<String, String> authorities;
-
-    @PostConstruct
-    protected void loadRoles() {
-
-        // using hashmap, could also read this info from a database
-
-        authorities = new LinkedHashMap<String, String>();
-
-        // key=the role, value=display to user
-        authorities.put("ROLE_EMPLOYEE", "USER");
-        authorities.put("ROLE_MANAGER", "MANAGER");
-        authorities.put("ROLE_ADMIN", "ADMIN");
-    }
-
     @Autowired
     public LoginRegisterController(UserService theUserService, NotificationService theNotifyService, PasswordEncoder passwordEncoder) {
         this.userService = theUserService;
         this.notifyService = theNotifyService;
-        this.passwordEncoder = passwordEncoder;
     }
-
 
     @GetMapping("/showMyLoginPage")
     public String Login(LoginForm loginForm) {
@@ -77,10 +55,6 @@ public class LoginRegisterController {
 
         theModel.addAttribute("blogUser", new BlogUser());
 
-        //for admin
-        // add roles to the model for form display
-       // theModel.addAttribute("authorities", authorities);
-
         return "users/register";
     }
 
@@ -92,7 +66,6 @@ public class LoginRegisterController {
             return "users/register";
         }
 //
-
         if(userService.findByUserName(blogUser.getUsername()) == null){
           User user = userService.create(blogUser);
         }else{

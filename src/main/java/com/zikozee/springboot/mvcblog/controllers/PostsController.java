@@ -5,8 +5,6 @@ import com.zikozee.springboot.mvcblog.models.User;
 import com.zikozee.springboot.mvcblog.services.NotificationService;
 import com.zikozee.springboot.mvcblog.services.PostService;
 import com.zikozee.springboot.mvcblog.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,7 +19,6 @@ public class PostsController {
     private NotificationService notifyService;
     private UserService userService;
 
-    private Logger logger = LoggerFactory.getLogger(PostsController.class);
     @Autowired
     public PostsController(PostService thePostService, NotificationService theNotifyService, UserService userService) {
         this.postService = thePostService;
@@ -32,9 +29,7 @@ public class PostsController {
     @GetMapping("/posts/view/{id}")
     public String view(@PathVariable("id") Long id, Model model){
         Post post = postService.findById(id);
-//        if(id >= postService.findAll().size() || id<= 0){
-//            throw new UserNotFoundException("Sorry, the post #"+id +" is not found");
-//        }
+
         if(post == null){
             notifyService.addErrorMessage("Cannot find post with id #" + id);
             return "redirect:/";

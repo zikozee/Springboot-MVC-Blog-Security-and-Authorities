@@ -21,7 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig(@Qualifier("dataSource") DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
     //FIX
     //Error was cos of salting, springboot uses bCrypt that starts with $2a
     // fix by salting using test in config
@@ -30,7 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, enabled"
                         + " from users where username=?")
@@ -38,8 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         + "from authorities where username=?")
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
-
-
 //    @Override
 //        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //
@@ -50,7 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .and()
 //                    .withUser("susan").password(passwordEncoder().encode("test123")).roles("ADMIN");
 //        }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
