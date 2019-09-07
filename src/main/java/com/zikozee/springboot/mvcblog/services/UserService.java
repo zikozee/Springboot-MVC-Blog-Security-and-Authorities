@@ -9,8 +9,8 @@ public interface UserService {
     List<User> findAll();
     User findById(Long id);
     User create(BlogUser blogUser);
-    User edit(User user);
-    void deleteById(Long id);
 
+    void edit(User user);
+    void deleteById(Long id);
     User findByUserName(String userName);
 }

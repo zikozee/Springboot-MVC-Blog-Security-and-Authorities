@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 public class PostServiceImpl implements PostService{
     private PostRepository postRepository;
     private NotificationService notifyService;
-    private UserService userService;
     private Logger logger = Logger.getLogger(getClass().getName());
 
     //used @Lazy to prevent bean circle_loop--->> occurs only in constructor injection
@@ -26,7 +25,6 @@ public class PostServiceImpl implements PostService{
     public PostServiceImpl(PostRepository postRepo, NotificationService notificationService, @Lazy UserService userService) {
         this.postRepository = postRepo;
         this.notifyService = notificationService;
-        this.userService = userService;
     }
 
 //    public void LoadMe(UserService userService){
@@ -41,7 +39,6 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Post> findLatest5() {
         return this.postRepository.findLatest5Posts(PageRequest.of(0, 5));
-
 //        List<Post> last5 = new ArrayList<>();
 //        List<Post> allPost = findAll();
 //        //allPost.sort(Comparator.comparing(Post::getDate));
@@ -67,8 +64,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Post create_edit(Post post) {
-        return this.postRepository.save(post);
+    public void create_edit(Post post) {
+        this.postRepository.save(post);
     }
 
 
@@ -101,6 +98,4 @@ public class PostServiceImpl implements PostService{
         }
         return userPosts;
     }
-
-
 }

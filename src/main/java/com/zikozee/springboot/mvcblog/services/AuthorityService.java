@@ -7,8 +7,5 @@ import java.util.List;
 public interface AuthorityService {
 
     List<Authority> findAll();
-    void save(Authority authority);
-    void delete(Long id);
-
     List<Authority> findByUsername(String username);
 }
