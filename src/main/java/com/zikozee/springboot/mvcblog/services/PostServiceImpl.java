@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Primary
 @Service
@@ -97,5 +99,15 @@ public class PostServiceImpl implements PostService{
             }
         }
         return userPosts;
+    }
+
+    @Override
+    public List<Post> homePosts(Model model) {
+        List<Post> lastest5Posts = findLatest5();
+        model.addAttribute("latest5Posts", lastest5Posts);
+
+        List<Post> lastest3Posts = lastest5Posts.stream().
+                limit(3).collect(Collectors.toList());
+        return lastest3Posts;
     }
 }

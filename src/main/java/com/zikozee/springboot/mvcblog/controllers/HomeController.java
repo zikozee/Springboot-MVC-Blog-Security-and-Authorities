@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -22,12 +21,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(Model model){
-        List<Post> lastest5Posts = postService.findLatest5();
-        model.addAttribute("latest5Posts", lastest5Posts);
-
-        List<Post> lastest3Posts = lastest5Posts.stream().
-                limit(3).collect(Collectors.toList());
-
+        List<Post> homePosts = postService.homePosts(model);
 //        for loop commented out
 //        List<Post> lastest3Posts = new ArrayList<>();
 //        //lastest5Posts.sort(Comparator.comparing(Post::getDate));
@@ -35,7 +29,7 @@ public class HomeController {
 //        for(int i=0; i<(lastest5Posts.size()-2); i++){
 //            lastest3Posts.add(lastest5Posts.get(i));
 //        }
-        model.addAttribute("latest3Posts", lastest3Posts);
+        model.addAttribute("latest3Posts", homePosts);
         return "index";
     }
 }
