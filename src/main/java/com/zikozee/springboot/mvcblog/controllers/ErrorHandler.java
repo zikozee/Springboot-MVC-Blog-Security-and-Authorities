@@ -1,33 +1,26 @@
 package com.zikozee.springboot.mvcblog.controllers;
 
+import com.zikozee.springboot.mvcblog.services.ErrorService;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class ErrorHandler implements ErrorController {//or you can just annotate with @ExceptionHandler
 
+    private ErrorService errorService;
+
+    public ErrorHandler(ErrorService errorService) {
+        this.errorService = errorService;
+    }
+
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Exception exc, Model model) {
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
-        if (status != null) {
-            Integer statusCode = Integer.parseInt(status.toString());
-
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                model.addAttribute("message", exc.getMessage());
-                return "error/404";
-            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                model.addAttribute("message", exc.getMessage());
-                return "error/500";
-            }
-        }
-        return "error/error";
+        return errorService.handle_404_500_error(request, exc, model);
     }
 
     @Override
