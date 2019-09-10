@@ -1,7 +1,7 @@
 package com.zikozee.springboot.mvcblog.controllers;
 
+import com.zikozee.springboot.mvcblog.models.Authority;
 import com.zikozee.springboot.mvcblog.models.User;
-import com.zikozee.springboot.mvcblog.services.AdminService;
 import com.zikozee.springboot.mvcblog.services.AuthorityService;
 import com.zikozee.springboot.mvcblog.services.NotificationService;
 import com.zikozee.springboot.mvcblog.services.UserService;
@@ -23,8 +23,6 @@ public class AdminController {
     private AuthorityService authorityService;
     private NotificationService notifyService;
     private UserService userService;
-    private AdminService adminService;
-
     private Logger logger = LoggerFactory.getLogger(PostsController.class);
 
     @Autowired
@@ -54,8 +52,15 @@ public class AdminController {
 
         logger.info(chosenAuthority + "  username  " + user.getUsername());
 
-        adminService.CheckIfUserHasRole(user, chosenAuthority);
-        adminService.addNewRole(user, chosenAuthority);
+        List<Authority> userAuthority = authorityService.findByUsername(user.getUsername());
+        for (Authority authority : userAuthority) {
+            if (authority.getAuthority().equals("ROLE_" + chosenAuthority)) {
+                notifyService.addInfoMessage("User Already has selected right");
+                return "redirect:/users";
+            }
+        }
+        userAuthority.add(new Authority(user.getUsername(), "ROLE_" + chosenAuthority));
+        user.setAuthorities(userAuthority);
 
         userService.edit(user);
         notifyService.addInfoMessage("User rights modified Successfully");
