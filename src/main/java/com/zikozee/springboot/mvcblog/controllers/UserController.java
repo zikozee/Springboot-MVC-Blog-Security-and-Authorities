@@ -5,6 +5,7 @@ import com.zikozee.springboot.mvcblog.models.User;
 import com.zikozee.springboot.mvcblog.services.NotificationService;
 import com.zikozee.springboot.mvcblog.services.PostService;
 import com.zikozee.springboot.mvcblog.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,9 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
+@Slf4j
 public class UserController {
+
     private UserService userService;
     private PostService postService;
     private NotificationService notifyService;

@@ -6,11 +6,11 @@
 <body>
 <header th:replace="layout::site-header"/>
 
-<p>
-    <span th:remove="tag" th:text="${message}"></span>
-</p>
+<h3>
+    <span th:text="${message}">hhhh</span>
+</h3>
 <div style="text-align: center; margin-top: 100px; margin-bottom: 100px">
-    <h2>404 - resource not found</h2>
+    <h2>404 - resource path not found</h2>
     <a th:href="@{/}">Go back to Home Page</a>
 
 </div>

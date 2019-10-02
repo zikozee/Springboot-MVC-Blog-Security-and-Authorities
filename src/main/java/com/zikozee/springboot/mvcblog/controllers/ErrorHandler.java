@@ -3,8 +3,7 @@ package com.zikozee.springboot.mvcblog.controllers;
 import com.zikozee.springboot.mvcblog.services.ErrorService;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,10 +16,10 @@ public class ErrorHandler implements ErrorController {//or you can just annotate
         this.errorService = errorService;
     }
 
-    @RequestMapping("/error")
-    public String handleError(HttpServletRequest request, Exception exc, Model model) {
+    @GetMapping("/error")
+    public String handleError(HttpServletRequest request, Exception exc) {
 
-        return errorService.handle_404_500_error(request, exc, model);
+        return errorService.handle_404_500_error(request, exc);
     }
 
     @Override

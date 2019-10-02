@@ -14,4 +14,5 @@ public class GlobalController {
 
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
+
 }

@@ -1,17 +1,19 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Resource not found</title>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: site-head">
+    <title id="pageTitle">Change Right</title>
 </head>
 <body>
+<header th:replace="layout::site-header"/>
 
-<h2>404 - resource not found</h2>
+<h3>
+    <span th:text="${message}"></span>
+</h3>
+<div style="text-align: center; margin-top: 100px; margin-bottom: 100px">
+    <h2>500 - Server error</h2>
+    <a th:href="@{/}">Go back to Home Page</a>
 
-<p>
-    <span th:remove="tag" th:text="${message}"></span>
-</p>
-
+</div>
+<footer th:replace="layout::site-footer"/>
 </body>
 </html>
