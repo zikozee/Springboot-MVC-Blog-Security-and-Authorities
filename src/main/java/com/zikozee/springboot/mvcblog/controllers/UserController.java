@@ -1,7 +1,7 @@
 package com.zikozee.springboot.mvcblog.controllers;
 
-import com.zikozee.springboot.mvcblog.models.Post;
-import com.zikozee.springboot.mvcblog.models.User;
+import com.zikozee.springboot.mvcblog.model.Post;
+import com.zikozee.springboot.mvcblog.model.User;
 import com.zikozee.springboot.mvcblog.services.NotificationService;
 import com.zikozee.springboot.mvcblog.services.PostService;
 import com.zikozee.springboot.mvcblog.services.UserService;

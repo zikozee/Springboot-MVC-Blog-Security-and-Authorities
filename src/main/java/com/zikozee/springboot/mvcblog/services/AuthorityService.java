@@ -1,6 +1,6 @@
 package com.zikozee.springboot.mvcblog.services;
 
-import com.zikozee.springboot.mvcblog.models.Authority;
+import com.zikozee.springboot.mvcblog.model.Authority;
 
 import java.util.List;
 

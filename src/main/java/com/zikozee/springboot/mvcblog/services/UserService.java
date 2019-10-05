@@ -1,7 +1,7 @@
 package com.zikozee.springboot.mvcblog.services;
 
-import com.zikozee.springboot.mvcblog.models.BlogUser;
-import com.zikozee.springboot.mvcblog.models.User;
+import com.zikozee.springboot.mvcblog.model.BlogUser;
+import com.zikozee.springboot.mvcblog.model.User;
 
 import java.util.List;
 

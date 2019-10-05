@@ -1,8 +1,8 @@
 package com.zikozee.springboot.mvcblog.services;
 
-import com.zikozee.springboot.mvcblog.models.Authority;
-import com.zikozee.springboot.mvcblog.models.BlogUser;
-import com.zikozee.springboot.mvcblog.models.User;
+import com.zikozee.springboot.mvcblog.model.Authority;
+import com.zikozee.springboot.mvcblog.model.BlogUser;
+import com.zikozee.springboot.mvcblog.model.User;
 import com.zikozee.springboot.mvcblog.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

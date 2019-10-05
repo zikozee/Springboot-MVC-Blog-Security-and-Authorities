@@ -1,6 +1,6 @@
 package com.zikozee.springboot.mvcblog.services;
 
-import com.zikozee.springboot.mvcblog.models.Post;
+import com.zikozee.springboot.mvcblog.model.Post;
 import com.zikozee.springboot.mvcblog.repositories.PostRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;

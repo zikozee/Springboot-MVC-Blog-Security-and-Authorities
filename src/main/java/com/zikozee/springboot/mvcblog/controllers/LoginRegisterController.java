@@ -1,8 +1,8 @@
 package com.zikozee.springboot.mvcblog.controllers;
 
-import com.zikozee.springboot.mvcblog.models.BlogUser;
-import com.zikozee.springboot.mvcblog.models.LoginForm;
-import com.zikozee.springboot.mvcblog.models.User;
+import com.zikozee.springboot.mvcblog.model.BlogUser;
+import com.zikozee.springboot.mvcblog.model.LoginForm;
+import com.zikozee.springboot.mvcblog.model.User;
 import com.zikozee.springboot.mvcblog.services.NotificationService;
 import com.zikozee.springboot.mvcblog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

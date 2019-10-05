@@ -1,6 +1,6 @@
 package com.zikozee.springboot.mvcblog.controllers;
 
-import com.zikozee.springboot.mvcblog.models.Post;
+import com.zikozee.springboot.mvcblog.model.Post;
 import com.zikozee.springboot.mvcblog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

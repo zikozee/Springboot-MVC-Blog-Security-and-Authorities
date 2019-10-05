@@ -1,6 +1,6 @@
 package com.zikozee.springboot.mvcblog.services;
 
-import com.zikozee.springboot.mvcblog.models.Post;
+import com.zikozee.springboot.mvcblog.model.Post;
 import org.springframework.ui.Model;
 
 import java.util.List;

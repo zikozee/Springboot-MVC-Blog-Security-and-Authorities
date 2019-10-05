@@ -1,6 +1,6 @@
 package com.zikozee.springboot.mvcblog.repositories;
 
-import com.zikozee.springboot.mvcblog.models.Post;
+import com.zikozee.springboot.mvcblog.model.Post;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
