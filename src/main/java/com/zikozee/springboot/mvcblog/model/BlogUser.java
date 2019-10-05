@@ -1,4 +1,4 @@
-package com.zikozee.springboot.mvcblog.models;
+package com.zikozee.springboot.mvcblog.model;
 
 import com.zikozee.springboot.mvcblog.validation.FieldMatch;
 import lombok.Getter;

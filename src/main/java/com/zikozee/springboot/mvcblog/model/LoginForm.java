@@ -1,4 +1,4 @@
-package com.zikozee.springboot.mvcblog.models;
+package com.zikozee.springboot.mvcblog.model;
 
 import lombok.Getter;
 import lombok.Setter;
