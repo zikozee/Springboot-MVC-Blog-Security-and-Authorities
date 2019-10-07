@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -33,7 +32,7 @@ public class UserController {
 
     @GetMapping("/users")
     public String ListUsers(Model theModel){
-        List<User> users =  userService.findAll();
+        Set<User> users = userService.findAll();
         theModel.addAttribute("users", users);
 
         return "users/index";

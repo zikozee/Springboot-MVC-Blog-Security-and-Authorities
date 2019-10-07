@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Controller
 public class PostsController {
@@ -42,7 +42,7 @@ public class PostsController {
     @GetMapping("/posts")
     public String listUserPosts(Model theModel){
         //get posts from database
-        List<Post> posts = postService.findAll();
+        Set<Post> posts = postService.findAll();
 
         // add to the spring model
         theModel.addAttribute("posts", posts);

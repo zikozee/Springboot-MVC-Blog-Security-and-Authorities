@@ -7,9 +7,9 @@ import com.zikozee.springboot.mvcblog.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @Service
@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public Set<User> findAll() {
+        return new HashSet<>(userRepository.findAll());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
 //        // give user default role of "USER"
         Authority authority = new Authority(user.getUsername(), "ROLE_USER");
-        List<Authority> authorityList = new ArrayList<>();
+        Set<Authority> authorityList = new HashSet<>();
         authorityList.add(authority);
         user.setAuthorities(authorityList);
         //user.getAuthorities().add(authority);   // all the authority above for this line of code

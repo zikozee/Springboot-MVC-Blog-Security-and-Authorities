@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class AdminController {
@@ -52,7 +53,7 @@ public class AdminController {
 
         logger.info(chosenAuthority + "  username  " + user.getUsername());
 
-        List<Authority> userAuthority = authorityService.findByUsername(user.getUsername());
+        Set<Authority> userAuthority = authorityService.findByUsername(user.getUsername());
         for (Authority authority : userAuthority) {
             if (authority.getAuthority().equals("ROLE_" + chosenAuthority)) {
                 notifyService.addInfoMessage("User Already has selected right");

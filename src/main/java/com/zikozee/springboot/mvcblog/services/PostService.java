@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface PostService {
-    List<Post> findAll();
+    Set<Post> findAll();
     List<Post> findLatest5();
     Post findById(Long id);
 
