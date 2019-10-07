@@ -106,8 +106,7 @@ public class PostServiceImpl implements PostService{
         List<Post> lastest5Posts = findLatest5();
         model.addAttribute("latest5Posts", lastest5Posts);
 
-        List<Post> lastest3Posts = lastest5Posts.stream().
+        return lastest5Posts.stream().
                 limit(3).collect(Collectors.toList());
-        return lastest3Posts;
     }
 }
