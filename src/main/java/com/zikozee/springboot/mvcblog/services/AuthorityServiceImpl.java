@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorityServiceImpl implements AuthorityService {
@@ -24,14 +25,18 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Set<Authority> findByUsername(String username) {
-        Set<Authority> userAuthorities = new HashSet<>();
-
-        for(Authority authority : findAll()){
-            if(authority.getUsername().equals(username)){
-                userAuthorities.add(authority);
-            }
-        }
-        return userAuthorities;
+//        Set<Authority> userAuthorities = new HashSet<>();
+//
+//        for(Authority authority : findAll()){
+//            if(authority.getUsername().equals(username)){
+//                userAuthorities.add(authority);
+//            }
+//        }
+//        return userAuthorities;
+        return findAll()
+                .parallelStream()
+                .filter(authority -> authority.getUsername().equals(username))
+                .collect(Collectors.toSet());
     }
 
 }

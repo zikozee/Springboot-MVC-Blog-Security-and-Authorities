@@ -41,14 +41,6 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Post> findLatest5() {
         return this.postRepository.findLatest5Posts(PageRequest.of(0, 5));
-//        List<Post> last5 = new ArrayList<>();
-//        List<Post> allPost = findAll();
-//        //allPost.sort(Comparator.comparing(Post::getDate));
-//        allPost.sort(Comparator.comparing(Post::getDate).reversed());
-//        for(int i=0; i<(allPost.size()-(allPost.size()-5)); i++){
-//            last5.add(allPost.get(i));
-//        }
-//        return last5;
     }
 
     @Override
@@ -62,7 +54,9 @@ public class PostServiceImpl implements PostService{
             //throw new RuntimeException("Did not find employee id - " + id);
             notifyService.addErrorMessage("Did not find Post id - " + id);
         }
+
         return post;
+
     }
 
     @Override
@@ -90,15 +84,20 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Set<Post> findByAuthor(String username) {
-        Set<Post> userPosts = new HashSet<>();
+//        Set<Post> userPosts = new HashSet<>();
+//
+//        for(Post post: findAll()){
+//            //logger.info(post.getAuthor().getUsername());
+//            if(post.getAuthor().getUsername().equals(username)){
+//                userPosts.add(post);
+//            }
+//        }
+//        return userPosts;
 
-        for(Post post: findAll()){
-            //logger.info(post.getAuthor().getUsername());
-            if(post.getAuthor().getUsername().equals(username)){
-                userPosts.add(post);
-            }
-        }
-        return userPosts;
+        return findAll()
+                .parallelStream()
+                .filter(post -> post.getAuthor().getUsername().equals(username))
+                .collect(Collectors.toSet());
     }
 
     @Override

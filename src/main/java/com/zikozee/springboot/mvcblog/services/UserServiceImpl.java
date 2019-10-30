@@ -4,14 +4,15 @@ import com.zikozee.springboot.mvcblog.model.Authority;
 import com.zikozee.springboot.mvcblog.model.BlogUser;
 import com.zikozee.springboot.mvcblog.model.User;
 import com.zikozee.springboot.mvcblog.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -20,8 +21,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private AuthorityService authorityService;
     private PostService postService;
-
-    private Logger logger = Logger.getLogger(getClass().getName());
 
     public UserServiceImpl(UserRepository userRepository, NotificationService notifyService,
                            PasswordEncoder passwordEncoder, AuthorityService authorityService, PostService postService) {
@@ -84,11 +83,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUserName(String userName) {
-       for(User user :  userRepository.findAll()){
-           if(user.getUsername().equals(userName)){
-               return user;
-           }
-       }
+        for(User user :  userRepository.findAll()){
+            if(user.getUsername().equals(userName)){
+                return user;
+            }
+        }
         return null;
     }
 }
