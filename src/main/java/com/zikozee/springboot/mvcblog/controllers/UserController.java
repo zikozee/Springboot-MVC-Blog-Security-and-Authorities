@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/users/post")
-    public String ListUserPost(Model theModel){
+    public String listUserPost(Model theModel) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Set<Post> userPosts =  postService.findByAuthor(username);
