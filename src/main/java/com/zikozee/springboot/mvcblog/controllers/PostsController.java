@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Set;
 
@@ -81,9 +82,11 @@ public class PostsController {
     }
 
     @GetMapping("/posts/delete")
-    public String showFormForDelete(@RequestParam("postId") Long theId){
+    public String showFormForDelete(@RequestParam("postId") Long theId, RedirectAttributes redirectAttributes) {
 
         postService.deleteById(theId);
+
+        redirectAttributes.addFlashAttribute("message", "deleted successfully");
 
         return "redirect:/users/post";
     }

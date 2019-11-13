@@ -2,6 +2,7 @@ package com.zikozee.springboot.mvcblog.services;
 
 import com.zikozee.springboot.mvcblog.model.Post;
 import com.zikozee.springboot.mvcblog.repositories.PostRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Primary
 @Service
+@Slf4j
 public class PostServiceImpl implements PostService{
     private PostRepository postRepository;
     private NotificationService notifyService;
@@ -35,7 +37,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Set<Post> findAll() {
-        return new HashSet<>(postRepository.findAll());
+        return new HashSet<>(postRepository.findByOrderByDateAsc());
     }
 
     @Override
@@ -74,7 +76,8 @@ public class PostServiceImpl implements PostService{
 //            }
 //        }
 //        throw new RuntimeException("Post not found: " + id);
-        if(id >= this.postRepository.findAll().size() || id <=0){
+        if (!this.findAll().contains(findById(id)) || id <= 0) {
+            log.info("id>>>>>>>.. " + id + " size: " + findAll().size());
             notifyService.addErrorMessage("Post not found: " + id);
             return;
         }
@@ -95,7 +98,7 @@ public class PostServiceImpl implements PostService{
 //        return userPosts;
 
         return findAll()
-                .parallelStream()
+                .stream()
                 .filter(post -> post.getAuthor().getUsername().equals(username))
                 .collect(Collectors.toSet());
     }

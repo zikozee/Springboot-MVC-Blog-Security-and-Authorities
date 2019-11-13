@@ -47,6 +47,11 @@ public class UserController {
             notifyService.addErrorMessage(username +" has not posted");
             return "redirect:/";
         }
+        String some = (String) theModel.asMap().get("message");
+        if (some != null) {
+            notifyService.addInfoMessage(some);
+        }
+
         theModel.addAttribute("userPosts", userPosts);
 
         return "posts/userPostIndex";
