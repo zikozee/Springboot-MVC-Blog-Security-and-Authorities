@@ -71,8 +71,7 @@ public class PostsController {
 
     @PostMapping("/posts/save")
     public String savePost(@ModelAttribute("post") Post post){
-        String loggedInUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByUserName(loggedInUsername);
+        User user = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
 
         // takes care of author_id
         post.setAuthor(user);

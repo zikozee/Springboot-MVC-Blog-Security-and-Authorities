@@ -2,6 +2,7 @@ package com.zikozee.springboot.mvcblog.controllers;
 
 import com.zikozee.springboot.mvcblog.model.Post;
 import com.zikozee.springboot.mvcblog.services.PostService;
+import com.zikozee.springboot.mvcblog.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -24,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PostsControllerTest {
     @Mock
     PostService postService;
+
+    @Mock
+    UserService userService;
 
     @InjectMocks
     PostsController controller;
@@ -45,10 +50,15 @@ class PostsControllerTest {
 
     @Test
     void view1() throws Exception {
-//        mockMvc.perform(get("/posts/view/{id}", 1L))
-//                .andExpect(status().isOk())
-//                .andExpect(model().attributeExists("posts"))
-//                .andExpect(view().name("posts/view"));
+        Post post = new Post();
+        post.setId(1L);
+
+        when(postService.findById(anyLong())).thenReturn(post);
+
+        mockMvc.perform(get("/posts/view/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("post"))
+                .andExpect(view().name("posts/view"));
     }
 
     @Test
@@ -82,7 +92,10 @@ class PostsControllerTest {
 
     @Test
     void savePost() throws Exception {
-//        mockMvc.perform(post("/posts/save"))
+
+//        mockMvc.perform(post("/posts/save")
+//                .param("id", "1")
+//                .param("body", "the body"))
 //                .andExpect(status().is3xxRedirection());
     }
 
